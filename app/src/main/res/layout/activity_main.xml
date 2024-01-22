@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnPermisos"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Transacciones de Permisos"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnTrabajadores"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Trabajadores"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnTipoPermiso"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Tipo de permiso"/>
+
+</LinearLayout>

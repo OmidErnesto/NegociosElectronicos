@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".Formularios.FormularioModificarTransaccionesActivity">
+
+    <EditText
+        android:id="@+id/editText_numero_permiso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Número de Permiso"
+        android:inputType="number"
+        android:enabled="false" />
+
+    <Spinner
+        android:id="@+id/spinner_codigo_trabajador"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spinner_tipo_permiso"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editText_fecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha" />
+
+    <EditText
+        android:id="@+id/editText_horas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Horas" />
+
+    <EditText
+        android:id="@+id/editText_estado_registro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Estado de Registro"
+        android:enabled="false" />
+
+    <Button
+        android:id="@+id/button_guardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Guardar" />
+
+    <Button
+        android:id="@+id/button_cancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar" />
+
+</LinearLayout>
