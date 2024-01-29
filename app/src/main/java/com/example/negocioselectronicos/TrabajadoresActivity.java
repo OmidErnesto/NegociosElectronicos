@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import com.example.negocioselectronicos.DB.DbTrabajadores;
 import com.example.negocioselectronicos.Formularios.FormularioModificarTrabajadoresActivity;
 import com.example.negocioselectronicos.Formularios.FormularioTrabajadoresActivity;
+import com.example.negocioselectronicos.Formularios.ResultadosBusquedaTrabajadoresActivity;
 
 public class TrabajadoresActivity extends AppCompatActivity {
 
@@ -133,6 +137,40 @@ public class TrabajadoresActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        /* Boton buscar */
+        Spinner spinner_search = findViewById(R.id.spinner_search);
+        EditText editText_query = findViewById(R.id.editText_query);
+
+        SpinnerItem[] items = new SpinnerItem[] {
+                new SpinnerItem(1, "Código", "codigo"),
+                new SpinnerItem(2, "Nombre", "nombre"),
+                new SpinnerItem(3, "Estado de Registro", "estado_registro")
+        };
+
+        ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        spinner_search.setAdapter(adapter);
+
+        Button btnBuscar = findViewById(R.id.button_search);
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SpinnerItem selectedItem = (SpinnerItem) spinner_search.getSelectedItem();
+                String campo = selectedItem.getQueryName();
+                String query = editText_query.getText().toString();
+
+                Cursor cursor = dbTrabajadores.buscarTrabajadorPorCampo(campo, query); // Usa dbTipoPermiso.buscarTipoPermisoPorCampo para TipoPermisoActivity
+                if (cursor.getCount() > 0) {
+                    Intent intent = new Intent(TrabajadoresActivity.this, ResultadosBusquedaTrabajadoresActivity.class); // Usa TipoPermisoActivity y ResultadosBusquedaTipoPermisoActivity para TipoPermisoActivity
+                    intent.putExtra("campo", campo);
+                    intent.putExtra("query", query);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(TrabajadoresActivity.this, "No se encontraron coincidencias", Toast.LENGTH_SHORT).show(); // Cambia TrabajadoresActivity a TipoPermisoActivity para TipoPermisoActivity
+                }
+                cursor.close();
             }
         });
 

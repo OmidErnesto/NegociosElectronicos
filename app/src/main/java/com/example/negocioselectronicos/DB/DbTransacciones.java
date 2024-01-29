@@ -54,4 +54,9 @@ public class DbTransacciones extends DbHelper{
         return db.update(TABLE_PERMISOS, values, "numero_permiso = ?", new String[] { String.valueOf(numeroPermiso) });
     }
 
+    public Cursor buscarPermisoPorCampo(String campo, String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_PERMISOS + " WHERE " + campo + " = ?", new String[] { query });
+    }
+
 }

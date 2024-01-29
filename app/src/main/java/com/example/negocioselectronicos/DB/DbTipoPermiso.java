@@ -52,4 +52,9 @@ public class DbTipoPermiso extends DbHelper{
         return db.rawQuery("SELECT * FROM " + TABLE_TIPO_PERMISO + " WHERE estado_registro = 'A'", null);
     }
 
+    public Cursor buscarTipoPermisoPorCampo(String campo, String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_TIPO_PERMISO + " WHERE " + campo + " = ?", new String[] { query });
+    }
+
 }

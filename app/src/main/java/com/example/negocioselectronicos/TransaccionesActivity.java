@@ -7,7 +7,10 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,6 +21,7 @@ import com.example.negocioselectronicos.DB.DbTrabajadores;
 import com.example.negocioselectronicos.DB.DbTransacciones;
 import com.example.negocioselectronicos.Formularios.FormularioModificarTransaccionesActivity;
 import com.example.negocioselectronicos.Formularios.FormularioTransaccionesActivity;
+import com.example.negocioselectronicos.Formularios.ResultadosBusquedaTransaccionesActivity;
 
 public class TransaccionesActivity extends AppCompatActivity {
 
@@ -142,6 +146,48 @@ public class TransaccionesActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /* Boton Buscar */
+
+        Button btnBuscar = findViewById(R.id.button_search);
+
+        Spinner spinner_search = findViewById(R.id.spinner_search);
+        EditText editText_query = findViewById(R.id.editText_query);
+
+        SpinnerItem[] items = new SpinnerItem[] {
+                new SpinnerItem(1, "Número de Permiso", "numero_permiso"),
+                new SpinnerItem(2, "Código Trabajador", "codigo_trabajador"),
+                new SpinnerItem(3, "Tipo de Permiso", "tipo_permiso"),
+                new SpinnerItem(4, "Fecha", "fecha"),
+                new SpinnerItem(5, "Horas", "horas"),
+                new SpinnerItem(6, "Estado de Registro", "estado_registro")
+        };
+
+        ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, items);
+        spinner_search.setAdapter(adapter);
+
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SpinnerItem selectedItem = (SpinnerItem) spinner_search.getSelectedItem();
+                String campo = selectedItem.getQueryName();
+                String query = editText_query.getText().toString();
+
+                Cursor cursor = dbTransacciones.buscarPermisoPorCampo(campo, query);
+                if (cursor.getCount() > 0) {
+                    // Hay resultados, inicia la actividad
+                    Intent intent = new Intent(TransaccionesActivity.this, ResultadosBusquedaTransaccionesActivity.class);
+                    intent.putExtra("campo", campo);
+                    intent.putExtra("query", query);
+                    startActivity(intent);
+                } else {
+                    // No hay resultados, muestra un Toast
+                    Toast.makeText(TransaccionesActivity.this, "No se encontraron coincidencias", Toast.LENGTH_SHORT).show();
+                }
+                cursor.close();
+            }
+        });
+
     }
 
     @Override

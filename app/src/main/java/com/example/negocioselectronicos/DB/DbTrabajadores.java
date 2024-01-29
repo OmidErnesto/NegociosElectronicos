@@ -52,4 +52,9 @@ public class DbTrabajadores extends DbHelper{
         return db.rawQuery("SELECT * FROM " + TABLE_TRABAJADORES + " WHERE estado_registro = 'A'", null);
     }
 
+    public Cursor buscarTrabajadorPorCampo(String campo, String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM " + TABLE_TRABAJADORES + " WHERE " + campo + " = ?", new String[] { query });
+    }
+
 }
