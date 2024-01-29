@@ -21,12 +21,8 @@ import android.database.Cursor;
 
 public class FormularioModificarTransaccionesActivity extends AppCompatActivity {
 
-    private EditText editTextNumeroPermiso;
-    private Spinner spinnerCodigoTrabajador;
-    private Spinner spinnerTipoPermiso;
-    private EditText editTextFecha;
-    private EditText editTextHoras;
-    private EditText editTextEstadoRegistro;
+    private EditText editTextNumeroPermiso, editTextFecha, editTextHoras, editTextEstadoRegistro;
+    private Spinner spinnerCodigoTrabajador, spinnerTipoPermiso;
     private DbTransacciones dbTransacciones;
     private DbTrabajadores dbTrabajadores;
     private DbTipoPermiso dbTipoPermiso;
@@ -57,19 +53,38 @@ public class FormularioModificarTransaccionesActivity extends AppCompatActivity 
         while (trabajadoresCursor.moveToNext()) {
             int codigo = trabajadoresCursor.getInt(trabajadoresCursor.getColumnIndex("codigo"));
             String nombre = trabajadoresCursor.getString(trabajadoresCursor.getColumnIndex("nombre"));
-            // CAMBIO AQUÍ: Agrega un objeto SpinnerItem en lugar de solo el nombre
+
             trabajadoresAdapter.add(new SpinnerItem(codigo, nombre));
         }
 
         while (tipoPermisoCursor.moveToNext()) {
             int codigo = tipoPermisoCursor.getInt(tipoPermisoCursor.getColumnIndex("codigo"));
             String nombre = tipoPermisoCursor.getString(tipoPermisoCursor.getColumnIndex("nombre"));
-            // CAMBIO AQUÍ: Agrega un objeto SpinnerItem en lugar de solo el nombre
+
             tipoPermisoAdapter.add(new SpinnerItem(codigo, nombre));
         }
 
         spinnerCodigoTrabajador.setAdapter(trabajadoresAdapter);
         spinnerTipoPermiso.setAdapter(tipoPermisoAdapter);
+
+        int codigoTrabajador = Integer.parseInt(intent.getStringExtra("codigo_trabajador"));
+        int tipoPermiso = Integer.parseInt(intent.getStringExtra("tipo_permiso"));
+
+        for (int i = 0; i < trabajadoresAdapter.getCount(); i++) {
+            SpinnerItem item = trabajadoresAdapter.getItem(i);
+            if (item != null && item.getCodigo() == codigoTrabajador) {
+                spinnerCodigoTrabajador.setSelection(i);
+                break;
+            }
+        }
+
+        for (int i = 0; i < tipoPermisoAdapter.getCount(); i++) {
+            SpinnerItem item = tipoPermisoAdapter.getItem(i);
+            if (item != null && item.getCodigo() == tipoPermiso) {
+                spinnerTipoPermiso.setSelection(i);
+                break;
+            }
+        }
 
         editTextFecha.setText(intent.getStringExtra("fecha"));
         editTextHoras.setText(intent.getStringExtra("horas"));
